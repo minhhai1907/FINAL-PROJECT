@@ -1,6 +1,6 @@
 # SECONDHAND MARKET
 
-## AUTHERIZATION
+## AUTHORIZATION
 -Users must login with email, password
 
 -user can log out
