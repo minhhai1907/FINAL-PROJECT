@@ -10,7 +10,7 @@ const Friend = require("../models/Friend");
 const bcrypt = require("bcryptjs");
 const userController = {};
 
-userController.register = catchAsync(async (req, res, next) => {
+userController.register =catchAsync(async (req, res) => {
   let { name, email, password } = req.body;
 
   let user = await User.findOne({ email });
@@ -36,7 +36,7 @@ userController.register = catchAsync(async (req, res, next) => {
 });
 
 userController.updateProfile = catchAsync(async (req, res, next) => {
-  const userId = req.userId;
+  const userId = req.params.id;
   const user = await User.findById(userId);
   if (!user)
     throw new AppError(404, "Account not found", "Update Profile Error");
@@ -148,6 +148,7 @@ userController.getSingleUser = catchAsync(async (req, res, next) => {
 
 userController.getCurrentUser = catchAsync(async (req, res, next) => {
   const userId = req.userId;
+
 
   const user = await User.findById(userId);
   if (!user)

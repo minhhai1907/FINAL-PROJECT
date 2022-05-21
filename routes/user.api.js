@@ -28,15 +28,15 @@ router.post(
  * @description Get current user info
  * @access Login required
  */
-router.get("/me", authMiddleware.loginRequired, userController.getCurrentUser);
+router.get("/me",authMiddleware.loginRequired, userController.getCurrentUser);
 
 /**
  * @route GET /users?page=1&limit=10
  * @description Get users with pagination
  * @access Login required
  */
-router.get("/", authMiddleware.loginRequired, userController.getUsers);
-
+router.get("/",  userController.getUsers);
+// ,authMiddleware.loginRequired
 /**
  * @route GET /users/:id
  * @description Get a user profile
@@ -56,7 +56,7 @@ router.get(
  * @description Update user profile
  * @access Login required
  */
-router.put("/:id", authMiddleware.loginRequired, userController.updateProfile);
+router.put("/:id",authMiddleware.loginRequired,  userController.updateProfile);
 
 module.exports = router;
 
