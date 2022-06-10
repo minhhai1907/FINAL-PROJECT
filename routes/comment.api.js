@@ -15,7 +15,7 @@ router.post(
   authMiddleware.loginRequired,
   validators.validate([
     body("content", "Missing content").exists().notEmpty(),
-    body("postId", "Missing postId")
+    body("productId", "Missing productId")
       .exists()
       .isString()
       .custom(validators.checkObjectId),

@@ -5,6 +5,10 @@ const router = express.Router();
 const authApi = require("./auth.api");
 router.use("/auth", authApi);
 
+// authApi
+const productApi = require("./product.api");
+router.use("/products", productApi);
+
 // userApi
 const userApi = require("./user.api");
 router.use("/users", userApi);

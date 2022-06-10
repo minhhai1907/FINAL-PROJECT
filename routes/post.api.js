@@ -13,21 +13,8 @@ const { body, param } = require("express-validator");
 router.post(
   "/",
   authMiddleware.loginRequired,
-  validators.validate([body("content", "Missing content").exists().notEmpty()]),
+  validators.validate([body("image", "Missing image").exists().notEmpty()]),
   postController.createNewPost
-);
-
-/**
- * @route GET /posts/user/:userId?page=1&limit=10
- * @description Get all posts an user can see with pagination
- * @access Login required
- */
-router.get(
-  "/user/:userId",
-  validators.validate([
-    param("userId").exists().isString().custom(validators.checkObjectId),
-  ]),
-  postController.getPosts
 );
 
 /**
@@ -36,7 +23,7 @@ router.get(
  * @access Login required
  */
 router.get(
-  "/:id",
+  "/:id",/**postID */
   authMiddleware.loginRequired,
   validators.validate([
     param("id").exists().isString().custom(validators.checkObjectId),
@@ -45,12 +32,26 @@ router.get(
 );
 
 /**
+ * @route GET /posts/userId
+ * @description Get  posts By current ID
+ * @access Login required
+ */
+router.get(
+  "/postList/:userId",/**currentUserId */
+  authMiddleware.loginRequired,
+  validators.validate([
+    param("userId").exists().isString().custom(validators.checkObjectId),
+  ]),
+  postController.getPostByCurrentUser
+);
+
+/**
  * @route PUT /posts/:id
  * @description Update a post
  * @access Login required
  */
 router.put(
-  "/:id",
+  "/:id",/**postID of author */
   authMiddleware.loginRequired,
   validators.validate([
     param("id").exists().isString().custom(validators.checkObjectId),
@@ -65,13 +66,37 @@ router.put(
  * @access Login required
  */
 router.delete(
-  "/:id",
+  "/:id",/**postId of author */
   authMiddleware.loginRequired,
   validators.validate([
     param("id").exists().isString().custom(validators.checkObjectId),
   ]),
   postController.deleteSinglePost
 );
+
+/**
+ * @route GET /posts/user/:userId?page=1&limit=10
+ * @description Get all posts an user can see with pagination
+ * @access Login required
+ */
+ router.get(
+
+  "/user/:userId",
+  validators.validate([
+    param("userId").exists().isString().custom(validators.checkObjectId),
+  ]),
+  postController.getPosts
+);
+
+
+//  router.get(
+
+//   "/all",
+//   // validators.validate([
+//   //   param("userId").exists().isString().custom(validators.checkObjectId),
+//   // ]),
+//   postController.getAllPosts
+// );
 
 /**
  * @route GET /posts/:id/comments
@@ -86,5 +111,6 @@ router.get(
   ]),
   postController.getCommentsOfPost
 );
+
 
 module.exports = router;

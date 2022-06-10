@@ -8,23 +8,20 @@ const userSchema = Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
-
     avatarUrl: { type: String, require: false, default: "" },
-    coverUrl: { type: String, require: false, default: "" },
-
     aboutMe: { type: String, require: false, default: "" },
     city: { type: String, require: false, default: "" },
     country: { type: String, require: false, default: "" },
-    company: { type: String, require: false, default: "" },
-    jobTitle: { type: String, require: false, default: "" },
     facebookLink: { type: String, require: false, default: "" },
     instagramLink: { type: String, require: false, default: "" },
     linkedinLink: { type: String, require: false, default: "" },
     twitterLink: { type: String, require: false, default: "" },
-
-    friendCount: { type: Number, default: 0 },
     postCount: { type: Number, default: 0 },
     isDeleted: { type: Boolean, default: false, select: false },
+    favourite:[{
+      type:Schema.Types.ObjectId,
+      ref:"Post"
+    }]
   },
   { timestamps: true }
 );

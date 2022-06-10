@@ -8,6 +8,7 @@ const { AppError, catchAsync, sendResponse } = require("../helpers/utils");
 const User = require("../models/User");
 const Friend = require("../models/Friend");
 const bcrypt = require("bcryptjs");
+const { find, findById, findByIdAndUpdate } = require("../models/User");
 const userController = {};
 
 userController.register =catchAsync(async (req, res) => {
@@ -44,12 +45,9 @@ userController.updateProfile = catchAsync(async (req, res, next) => {
   const allows = [
     "name",
     "avatarUrl",
-    "coverUrl",
     "aboutMe",
     "city",
     "country",
-    "company",
-    "jobTitle",
     "facebookLink",
     "instagramLink",
     "linkedinLink",
@@ -161,6 +159,47 @@ userController.getCurrentUser = catchAsync(async (req, res, next) => {
     user,
     null,
     "Get current user successful"
+  );
+});
+userController.deleteProfile = catchAsync(async (req, res, next) => {
+  // const { currentUserId } = req;
+  // const userId = req.params.id;
+  const currentUserId = req.userId;
+  let user = await User.findOne(
+    { _id: currentUserId, isDeleted: false },
+    "+isDeleted"
+  );
+  if (!user) throwError(404, "User not found", "deactivate Account error");
+  user.isDeleted = true;
+  await user.save();
+
+  return sendResponse(
+    res,
+    200,
+    true,
+    user,
+    null,
+    "delete account successful"
+  );
+});
+userController.putFavourite=catchAsync(async (req, res, next) => {
+
+  const userId=req.userId;
+  const id=req.params.id;
+  const user= await User. findByIdAndUpdate(userId,{
+    $push:{
+      favourite:id
+    }
+  })
+   await user.save()
+
+  return sendResponse(
+    res,
+    200,
+    true,
+    user,
+    null,
+    "add favourite item successful"
   );
 });
 

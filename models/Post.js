@@ -4,19 +4,45 @@ const User = require("./User");
 
 const postSchema = Schema(
   {
-    content: { type: String, required: true },
-    image: { type: String, default: "" },
+    image: { type: String, require: true },
+    title: { type: String, default: "" },
     author: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    reactions: {
-      like: { type: Number, default: 0 },
-      dislike: { type: Number, default: 0 },
+    price:{
+      type:Number,
+      default:0
+  },
+  description:{
+      type:String,
+     default:""
+  },
+  category:{
+    type:String,
+    // enum: ["All","Electronic", "Home", "Books","Toy&Game","Fashion"],
+    default:""
+  },
+  content:{
+      type:String,
+      default:""
+  },
+  commentCount: { 
+    type: Number,
+     default: 0
+     },
+  isDeleted: {
+     type: Boolean, 
+     default: false, 
+     select: false 
     },
-    commentCount: { type: Number, default: 0 },
-    isDeleted: { type: Boolean, default: false, select: false },
+  
+    // reactions: {
+    //   like: { type: Number, default: 0 },
+    //   dislike: { type: Number, default: 0 },
+    // },
+    
   },
   { timestamps: true }
 );

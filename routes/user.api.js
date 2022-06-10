@@ -24,21 +24,30 @@ router.post(
 );
 
 /**
- * @route GET /users/me
+ * @route GET /user/me
  * @description Get current user info
  * @access Login required
  */
 router.get("/me",authMiddleware.loginRequired, userController.getCurrentUser);
 
+
+router.put("/favourite/:id",authMiddleware.loginRequired,userController.putFavourite)
 /**
- * @route GET /users?page=1&limit=10
- * @description Get users with pagination
+ * @route PUT /user/:id
+ * @description Update user profile
  * @access Login required
  */
-router.get("/",  userController.getUsers);
-// ,authMiddleware.loginRequired
+
+ router.put("/:id",authMiddleware.loginRequired,  userController.updateProfile);
 /**
- * @route GET /users/:id
+ * @route DELETE /user/:id
+ * @description Update user profile
+ * @access Login required
+ */
+ router.delete("/",authMiddleware.loginRequired,  userController.deleteProfile);
+ 
+ /**
+ * @route GET /user/:id
  * @description Get a user profile
  * @access Login required
  */
@@ -51,12 +60,17 @@ router.get(
   userController.getSingleUser
 );
 
+
 /**
- * @route PUT /users/:id
- * @description Update user profile
+ * @route GET /users?page=1&limit=10
+ * @description Get users with pagination
  * @access Login required
  */
-router.put("/:id",authMiddleware.loginRequired,  userController.updateProfile);
+router.get("/",authMiddleware.loginRequired,  userController.getUsers);
+
+
+
+
 
 module.exports = router;
 
