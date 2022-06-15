@@ -59,8 +59,6 @@ router.get(
   ]),
   userController.getSingleUser
 );
-
-
 /**
  * @route GET /users?page=1&limit=10
  * @description Get users with pagination

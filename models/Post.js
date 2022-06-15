@@ -21,7 +21,6 @@ const postSchema = Schema(
   },
   category:{
     type:String,
-    // enum: ["All","Electronic", "Home", "Books","Toy&Game","Fashion"],
     default:""
   },
   content:{

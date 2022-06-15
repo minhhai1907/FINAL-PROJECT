@@ -1,7 +1,6 @@
 const { AppError, catchAsync, sendResponse } = require("../helpers/utils");
 const Comment = require("../models/Comment");
 const Post = require("../models/Post");
-
 const commentController = {};
 const calculateCommentCount = async (productId) => {
   const commentCount = await Comment.countDocuments({ product: productId });
@@ -11,11 +10,9 @@ const calculateCommentCount = async (productId) => {
 commentController.createNewComment = catchAsync(async (req, res, next) => {
   const userId = req.userId;
   const { content, productId } = req.body;
-
   const post = Post.findById(productId.productId);
   if (!post)
     throw new AppError(404, "Post not found", "Create New Comment Error");
-
   let comment = await Comment.create({
     author: userId,
     product: productId,
@@ -23,7 +20,6 @@ commentController.createNewComment = catchAsync(async (req, res, next) => {
   });
   await calculateCommentCount(productId);
   comment = await comment.populate("author");
-
   return sendResponse(
     res,
     200,

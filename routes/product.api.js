@@ -5,15 +5,9 @@ router.route('/')
 .post(productCtrl.createProduct)
 
 
-
-
 router.route('/:id')
 .delete(productCtrl.deleteProduct)
 .put(productCtrl.updateProduct)
 .get(productCtrl.getSingleProduct)
-
-
-
-
 
 module.exports=router

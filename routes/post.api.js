@@ -4,6 +4,7 @@ const postController = require("../controllers/post.controller");
 const validators = require("../middlewares/validators");
 const authMiddleware = require("../middlewares/authentication");
 const { body, param } = require("express-validator");
+const auth = require("../middlewares/auth");
 
 /**
  * @route POST /posts
@@ -74,6 +75,13 @@ router.delete(
   postController.deleteSinglePost
 );
 
+
+//   "/all/userId", 
+//   validators.validate([
+//     param("userId").exists().isString().custom(validators.checkObjectId),
+//   ]),
+//   postController.getPosts
+// );
 /**
  * @route GET /posts/user/:userId?page=1&limit=10
  * @description Get all posts an user can see with pagination
